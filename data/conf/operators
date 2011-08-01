@@ -1,0 +1,14 @@
+<operator>
+	name=Entel
+	logo=entel
+	modem=/dev/ttyUSB3
+</operator>
+<operator>
+	name=Tigo
+	logo=tigo
+	modem=/dev/ttyUSB0
+</operator>
+<operator>
+	name=Viva
+	logo=viva
+</operator>

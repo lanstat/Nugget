@@ -1,0 +1,8 @@
+<modems>
+	<vendor name=ZTE >
+		<product id=19d2:2003 nodo=ttyUSB3 />
+	</vendor>
+	<vendor name=Huawei >
+		<product id=12d1:1003 nodo=ttyUSB0 />
+	</vendor>
+</modems>
