@@ -1,0 +1,11 @@
+<operators>
+	<operator name='Entel'>
+		<logo>entel</logo>
+	</operator>
+	<operator name='Tigo'>
+		<logo>tigo</logo>
+	</operator>
+	<operator name='Viva'>
+		<logo>viva</logo>
+	</operator>
+</operators>
