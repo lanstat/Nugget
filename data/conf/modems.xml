@@ -25,5 +25,12 @@
 			<capabilities>
 			</capabilities>
 		</product>
+                <product id='4097'>
+			<data>0</data>
+			<conf>1</conf>
+			<capabilities>
+			</capabilities>
+		</product>
+
 	</vendor>
 </modems>
