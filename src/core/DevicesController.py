@@ -17,6 +17,7 @@ class DeviceController(gobject.GObject):
 		self.hal_manager_obj = self.dbus.get_object("org.freedesktop.Hal", "/org/freedesktop/Hal/Manager")
 		self.hal_manager = dbus.Interface(self.hal_manager_obj, "org.freedesktop.Hal.Manager")
 		
+		
 		#Signals
 		self.hal_manager.connect_to_signal("DeviceAdded", self.__plug_device_cb)
 		self.hal_manager.connect_to_signal("DeviceRemoved", self.__unplug_device_cb)
@@ -41,12 +42,11 @@ class DeviceController(gobject.GObject):
 																		str(props["usb_device.product_id"])):
 							self.device_active = self.devices_avalaible.get_Device()
 							self.device_active.dev_props = props
-							print props["info.udi"]
-							self.emit('added_device',self.device_active.name)
 							break
-		if(self.device_active!=None):
-			self.get_ports()
-			print self.device_active.name+" "+self.device_active.port['data']
+		if(self.device_active != None):
+			if(self.get_ports()):
+				print self.device_active
+				self.emit('added_device',self.device_active.name)
 		else:
 			print "Dispositivo no encontrado"
 		self.devices = []
@@ -54,7 +54,6 @@ class DeviceController(gobject.GObject):
 	def get_ports(self):
 		ports = []
 		self.devices = self.hal_manager.GetAllDevices()
-		#print "#################"
 		for dev in self.devices:
 			device_dbus_obj = self.dbus.get_object("org.freedesktop.Hal", dev)
 			try:
@@ -66,17 +65,19 @@ class DeviceController(gobject.GObject):
 						files = os.listdir(props["usb.linux.sysfs_path"])
 						for f in files:
 							if f.startswith("ttyUSB") :
-								#print props['info.udi']
 								ports.append(f)
 		ports.sort()
 		if(len(ports)<1):
+			self.device_active = None
 			print "Dispositivo no reconocido por el sistema"
+			return False
 		else:
 			data = self.device_active.port['data']
 			self.device_active.port['data'] = ports[int(data)]
 			conf = self.device_active.port['conf']
 			self.device_active.port['conf'] = ports[int(conf)]
 			print "Dispositivo reconocido "
+			return True
 
 	def __real_plug_device_cb(self, udi):
 		#print "plug"
@@ -93,10 +94,11 @@ class DeviceController(gobject.GObject):
 																	str(dev_props["usb_device.product_id"])):
 						self.device_active = self.devices_avalaible.get_Device()
 						self.device_active.dev_props = dev_props
-						self.get_ports()
-						self.emit('added_device',self.device_active.name)
-						print udi
-						print "Dispositivo encontrado"
+						if(self.get_ports()):
+							print self.device_active.name+" "+self.device_active.port['data']
+							print self.device_active
+							self.emit('added_device',self.device_active.name)
+							print "Dispositivo encontrado"
 
 		return False
 

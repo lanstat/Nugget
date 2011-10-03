@@ -7,8 +7,7 @@
 	ej. Bus 001 Device 011: ID 19d2:2003 ONDA Communication S.p.A.  
 							vendor^ ^product
 	nota. ambos hay que convertirlos a entero ya que los numeros estan en hexagecimal
-	data:es el puerto por el cual se ha de conectar a internet
-        conf: es el puerto por el cual se conecta a la sim
+	data:  
 	-->
 <modems>
 	<vendor name='ZTE' id='6610'>
@@ -16,6 +15,9 @@
 			<data>3</data>
 			<conf>1</conf>
 			<capabilities>
+				SMS
+				ADDRESS_BOOK
+				CALL_PHONE
 			</capabilities>
 		</product>
 	</vendor>
@@ -24,12 +26,18 @@
 			<data>0</data>
 			<conf>1</conf>
 			<capabilities>
+				SMS
+				ADDRESS_BOOK
+				CALL_PHONE
 			</capabilities>
 		</product>
-                <product id='4097'>
+		<product id='4097'>
 			<data>0</data>
 			<conf>1</conf>
 			<capabilities>
+				SMS
+				ADDRESS_BOOK
+				CALL_PHONE
 			</capabilities>
 		</product>
 

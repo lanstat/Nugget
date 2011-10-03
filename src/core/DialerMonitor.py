@@ -12,7 +12,7 @@ from random import random
 class monitor(gobject.GObject):
 
 	__gsignals__ = {'connecting' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,()),
-					'connected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,()),
+					'connected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,(gobject.TYPE_STRING,)),
 					'disconnecting' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,()),
 					'disconnected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,()),
 					'connecting_state_change' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,(gobject.TYPE_STRING,)),
@@ -21,7 +21,8 @@ class monitor(gobject.GObject):
 	
 	def __init__(self):
 		gobject.GObject.__init__(self)
-		self.wvdial_conf_file = '/var/tmp/dialer.conf'
+		home =  Popen('echo $HOME', shell=True, stdout=PIPE, close_fds=True)
+		self.wvdial_conf_file = home.stdout.readline().replace('\n','')+'/.nugget/dialer.conf'
 		self.wvdial_p = None
 		self.wvdial_pid = None
 		self.pppd_pid = None
@@ -30,12 +31,16 @@ class monitor(gobject.GObject):
 		self.dns_data = None
 		self.select_operator = None
 		self.status_flag = PPP_STATUS_DISCONNECTED
-		#gobject.timeout_add_seconds(2,self.__algo)
+		
+		self.test_up = 0
+		self.test_down = 0
+		
+		#gobject.timeout_add_seconds(1,self.__algo)
 
 	def __algo(self):
-		up = random()*150
-		down = random()*150
-		self.emit('pppstats_signal',int(down),int(up),1)
+		self.test_up = self.test_up + int(random()*10)
+		self.test_down = self.test_down + int(random()*10) + 20
+		self.emit('pppstats_signal',self.test_down,self.test_up,1)
 		return True
 
 	def __create_config(self, modem_active):
@@ -83,7 +88,7 @@ class monitor(gobject.GObject):
 
 	def __real_wvdial_monitor(self):
 		if self.wvdial_p.poll() == None :
-			print "Wvdial monitor : Wvdial running"
+			#print "Wvdial monitor : Wvdial running"
 			return True
 		else:
 			print  "Wvdial monitor : Wvdial killed"
@@ -125,7 +130,7 @@ class monitor(gobject.GObject):
 				if self.wvdial_pid == None :
 					return True
 
-			print  "pppd monitor : looking for pppd"
+			#print  "pppd monitor : looking for pppd"
 			self.emit('connecting_state_change','Creando pppd')
 			cmd = "ps -eo ppid,pid | grep '^[ ]*%s' | awk '{print $2}'" % self.wvdial_pid
 			pm =  Popen(cmd, shell=True, stdout=PIPE, close_fds=True)
@@ -142,21 +147,23 @@ class monitor(gobject.GObject):
 					tmp_str = wvdial_stderr.readline()
 					if "Using interface" in tmp_str :
 						self.ppp_if = tmp_str.split()[-1]
-						print  "pppd monitor : %s" % self.ppp_if
+						#print  "pppd monitor : %s" % self.ppp_if
 						break
 
 			return True
 		elif self.ppp_if != None :
-			print  "pppd monitor : looking for ip"
+			#print  "pppd monitor : looking for ip"
 			self.emit('connecting_state_change','Buscando IP...')
 			cmd = "LANG=C ifconfig %s | grep 'inet addr'" % self.ppp_if
 			pm =  Popen(cmd, shell=True, stdout=PIPE, close_fds=True)
 			out = pm.stdout.readline()
 			if out != "" :
-				print  "pppd monitor : pppd connected"
+				sp = out.strip().split(" ")[1]
+				ip = sp.split(":")[1]
+				#print  "pppd monitor : pppd connected"
 				self.__set_dns_info()
 				self.status_flag = PPP_STATUS_CONNECTED
-				self.emit('connected')
+				self.emit('connected',ip)
 				gobject.timeout_add(2000, self.__stats_monitor)
 				return False
 			else:
@@ -253,6 +260,6 @@ class monitor(gobject.GObject):
 				self.last_traffic_time = new_time
 				if self.status_flag == PPP_STATUS_CONNECTED :
 					self.emit("pppstats_signal", recived_bytes, sent_bytes, interval_time)
-					print "stats monitor : %i %i %d" % (recived_bytes, sent_bytes, interval_time)
+					#print "stats monitor : %i %i %d" % (recived_bytes, sent_bytes, interval_time)
 
 		return True

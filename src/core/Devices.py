@@ -1,4 +1,5 @@
 from xml.dom.minidom import parse
+from const import CONF_DIR
 
 class Device:
 	def __init__(self):
@@ -11,9 +12,12 @@ class Device:
 	def get_port(self,str):
 		return self.port[str]
 
+	def __str__(self):
+		return '\nName: '+self.name+'\nVendor: '+self.vendor+'\nProduct: '+self.product+'\nPort: '+self.port['data']+' '+self.port['conf']
+
 class DevicesAvalaible:
 	def __init__(self):
-		midom=parse("../data/conf/modems.xml")
+		midom=parse(CONF_DIR + 'modems.xml')
 		self.vendors = midom.childNodes[1].childNodes
 		self.__nProduct = None
 		self.__nVendor = None

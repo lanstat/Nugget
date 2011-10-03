@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<glade-interface>
+  <!-- interface-requires gtk+ 2.16 -->
+  <!-- interface-naming-policy project-wide -->
+  <widget class="GtkAboutDialog" id="about-dialog">
+    <property name="border_width">5</property>
+    <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="type_hint">normal</property>
+    <property name="has_separator">False</property>
+    <property name="program_name">Nugget</property>
+    <property name="version">0.4</property>
+    <property name="copyright" translatable="yes">Copyright &#xA9; 2011- ... Si no se acaba el mundo
+ el 2012 tal vez mas ^^</property>
+    <property name="comments" translatable="yes">Nugget gestiona automaticamente
+las conexiones a internet a travez de
+modems inalambricos, especialmente dise&#xF1;ada
+para sistemas de telefonia boliviana.</property>
+    <property name="website">uremix.org</property>
+    <property name="website_label" translatable="yes">Sitio de Uremix</property>
+    <property name="license" translatable="yes">Nugget es software libre; puede redistribuirlo 
+y/o modificarlo bajo los t&#xE9;rminos de la Licencia 
+P&#xFA;blica General de GNU tal como la publica la Free
+ Software Foundation; tanto en la versi&#xF3;n 2 de la 
+Licencia como (a su elecci&#xF3;n) cualquier versi&#xF3;n posterior.
+
+Nugget se distribuye con la esperanza de que ser&#xE1; 
+&#xFA;til,pero SIN NINGUNA GARANT&#xCD;A; sin incluso la garant&#xED;a 
+implicada de MERCANTIBILIDAD o ADECUACI&#xD3;N PARA 
+UN PROP&#xD3;SITO PARTICULAR. Vea la Licencia P&#xFA;blica 
+General de GNU para m&#xE1;s detalles.
+
+Deber&#xED;a haber recibido una copia de la Licencia 
+p&#xFA;blica General de GNU junto con Nautilus; si no,
+ escriba a la Free Software Foundation, Inc,51 Franklin 
+Street, Fifth Floor, Boston, MA 02110-1301, EE. UU.</property>
+    <property name="authors">Javier Garson &lt;lanstat@uremix.org&gt;
+Ariel Vega
+Angel Ortu&#xF1;o</property>
+    <property name="documenters">Javier Garson &lt;lanstat@uremix.org&gt;</property>
+    <property name="artists">Jared Lopez</property>
+    <property name="logo">../icons/icon.png</property>
+    <property name="wrap_license">True</property>
+    <child internal-child="vbox">
+      <widget class="GtkVBox" id="dialog-vbox5">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <widget class="GtkHButtonBox" id="dialog-action_area5">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>
