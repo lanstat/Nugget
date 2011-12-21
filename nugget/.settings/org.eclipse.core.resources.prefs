@@ -1,0 +1,6 @@
+#Wed Oct 05 03:12:22 BOT 2011
+eclipse.preferences.version=1
+encoding//src/modules/connector/__init__.py=utf-8
+encoding//src/modules/monitor/__init__.py=utf-8
+encoding//src/modules/prepaid/__init__.py=utf-8
+encoding//src/modules/sms/__init__.py=utf-8

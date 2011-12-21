@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Para insertar un nuevo modem se debe especificar (aunque se pide
+    encarecidamente usar el asistente):
+	vendor: 
+        name=nombre del vendedor del producto
+        id=id del vendedor normalmente se obtiene haciendo un lsusb
+	    NOTA
+            Si el vendor ya se encuentra insertar el producto como un elemento mas
+
+	product:
+        id=id del producto en si se obtiene haciendo un lsusb
+
+	ej. Bus 001 Device 011: ID 19d2:2003 ONDA Communication S.p.A.  
+							vendor^ ^product
+	    NOTA
+            Ambos hay que convertirlos a decimal ya que los numeros estan en hexagecimal
+	    data: es el puerto por el cual se ha de conectar a internet
+        conf: es el puerto por el cual se accede a la sim
+	-->
+<modems>
+	<vendor name='ZTE' id='19d2'>
+		<product id='2003'>
+			<data>3</data>
+			<conf>1</conf>
+			<capabilities>
+			</capabilities>
+		</product>
+	</vendor>
+	<vendor name='Huawei' id='4817'>
+		<product id='4099' name='HUAWEI E226/E220/E270'>
+			<data>0</data>
+			<conf>1</conf>
+			<capabilities>
+			</capabilities>
+		</product>
+        <product id='4097' name='HUAWEI E1556/E620'>
+			<data>0</data>
+			<conf>1</conf>
+			<capabilities>
+			</capabilities>
+		</product>
+		<product id='5174' name='HUAWEI e173'>
+			<data>0</data>
+			<conf>1</conf>
+			<capabilities>
+			</capabilities>
+		</product>
+		<product id='5292' name='HUAWEI e153'>
+			<data>0</data>
+			<conf>1</conf>
+			<capabilities>
+			</capabilities>
+		</product>
+	</vendor>
+</modems>
